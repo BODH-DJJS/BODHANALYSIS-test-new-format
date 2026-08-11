@@ -1035,9 +1035,10 @@
                             <div class="rsec-title">🏢 Branch Details</div>
                             <div class="rsec-sub">Your branch and location information</div>
                             <div class="rgrid">
-                                <div class="rfl"><label>State <span class="rq">*</span></label><input type="text" name="state" placeholder="e.g., Maharashtra" required /><div class="re">Please enter your state</div></div>
+                                <div class="rfl"><label>State <span class="rq">*</span></label><select name="state" required><option value="" disabled selected>Select State</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chandigarh</option><option>Chhattisgarh</option><option>Delhi</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jammu & Kashmir</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Ladakh</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Puducherry</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option></select><div class="re">Please select your state</div></div>
                                 <div class="rfl"><label>Branch Name <span class="rq">*</span></label><input type="text" name="branchName" placeholder="e.g., Mira Road Branch" required /><div class="re">Please enter your branch name</div></div>
-                                <div class="rfl fw"><label>Branch AR &amp; Number <span class="rq">*</span></label><input type="text" name="branchAr" placeholder="e.g., Ramesh Gupta - 9123456780" required /><div class="rh">Name and contact of Branch AR</div><div class="re">Enter Branch AR details</div></div>
+                                <div class="rfl"><label>Branch AR Name <span class="rq">*</span></label><input type="text" name="branchArName" placeholder="e.g., Ramesh Gupta" required /><div class="re">Enter Branch AR name</div></div>
+                                <div class="rfl"><label>Branch AR Number <span class="rq">*</span></label><input type="tel" name="branchArNumber" placeholder="e.g., 9123456780" pattern="[0-9]{10}" required /><div class="rh">10-digit mobile number</div><div class="re">Enter valid 10-digit number</div></div>
                             </div>
                             <div class="rbtn-row"><button type="button" class="rb rb-back" onclick="rPrev(2)">← Back</button><button type="button" class="rb rb-next" onclick="rNext(2)">Continue →</button></div>
                         </div>
@@ -2447,14 +2448,14 @@
 
         function rValidate(n) {
             const sec = document.getElementById('rS' + n);
-            const inputs = sec.querySelectorAll('input[required], textarea[required]');
+            const inputs = sec.querySelectorAll('input[required], textarea[required], select[required]');
             let ok = true;
             inputs.forEach(inp => {
                 const g = inp.closest('.rfl');
                 g.classList.remove('has-error');
-                if (!inp.value.trim()) { g.classList.add('has-error'); ok = false; }
+                if (!inp.value || !inp.value.trim()) { g.classList.add('has-error'); ok = false; }
                 else if (inp.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)) { g.classList.add('has-error'); ok = false; }
-                else if (inp.name === 'contact' && !/^\d{10}$/.test(inp.value.trim())) { g.classList.add('has-error'); ok = false; }
+                else if ((inp.name === 'contact' || inp.name === 'branchArNumber') && !/^\d{10}$/.test(inp.value.trim())) { g.classList.add('has-error'); ok = false; }
             });
             return ok;
         }
