@@ -1028,6 +1028,7 @@
                                 <div class="rfl"><label>Email ID <span class="rq">*</span></label><input type="email" name="email" placeholder="e.g., r.tilak@email.com" required /><div class="re">Enter a valid email address</div></div>
                                 <div class="rfl"><label>Age <span class="rq">*</span></label><input type="number" name="age" placeholder="e.g., 36" min="10" max="100" required /><div class="re">Please enter your age</div></div>
                                 <div class="rfl"><label>Date of Birth <span class="rq">*</span></label><input type="date" name="dob" required /><div class="rh">e.g., 14-Aug-1990</div><div class="re">Select your date of birth</div></div>
+                                <div class="rfl"><label>Gyan Diksha Date <span class="rq">*</span></label><input type="date" name="gyanDikshaDate" required /><div class="rh">Date of Gyan Diksha</div><div class="re">Select Gyan Diksha Date</div></div>
                             </div>
                             <div class="rbtn-row"><span></span><button type="button" class="rb rb-next" onclick="rNext(1)">Continue →</button></div>
                         </div>
@@ -1039,6 +1040,20 @@
                                 <div class="rfl"><label>Branch Name <span class="rq">*</span></label><input type="text" name="branchName" placeholder="e.g., Mira Road Branch" required /><div class="re">Please enter your branch name</div></div>
                                 <div class="rfl"><label>Branch AR Name <span class="rq">*</span></label><input type="text" name="branchArName" placeholder="e.g., Ramesh Gupta" required /><div class="re">Enter Branch AR name</div></div>
                                 <div class="rfl"><label>Branch AR Number <span class="rq">*</span></label><input type="tel" name="branchArNumber" placeholder="e.g., 9123456780" pattern="[0-9]{10}" required /><div class="rh">10-digit mobile number</div><div class="re">Enter valid 10-digit number</div></div>
+                                <div class="rfl"><label>Brother / Sister <span class="rq">*</span></label>
+                                    <select name="genderRole" id="genderRole" required onchange="updateBodhRoles()">
+                                        <option value="" disabled selected>Select</option>
+                                        <option value="Brother">Brother</option>
+                                        <option value="Sister">Sister</option>
+                                    </select>
+                                    <div class="re">Please select an option</div>
+                                </div>
+                                <div class="rfl"><label>Role in BODH Team <span class="rq">*</span></label>
+                                    <select name="bodhRole" id="bodhRole" required>
+                                        <option value="" disabled selected>Select Role</option>
+                                    </select>
+                                    <div class="re">Please select your role</div>
+                                </div>
                             </div>
                             <div class="rbtn-row"><button type="button" class="rb rb-back" onclick="rPrev(2)">← Back</button><button type="button" class="rb rb-next" onclick="rNext(2)">Continue →</button></div>
                         </div>
@@ -2518,6 +2533,36 @@
         const REG_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytrnrDsnh6MZp2qEaDmdTOVhlkaM9hDGu4g3Qz-oDp2MHicyCzT3P5ZZRxNGJbUtRc/exec';
         let rCur = 1;
         const rTotal = 4;
+
+        function updateBodhRoles() {
+            const type = document.getElementById('genderRole').value;
+            const roleSelect = document.getElementById('bodhRole');
+            roleSelect.innerHTML = '<option value="" disabled selected>Select Role</option>';
+            
+            let roles = [];
+            if (type === 'Brother') {
+                roles = [
+                    "BBTL", "B.B. HO Heads [TR]", "B.B. Zonal Heads", "B.B. State Heads", 
+                    "B.B. Branch Heads", "B.B. Branch Designer", "B.B. HO SPOC Writer", 
+                    "B.B. HO SPOC Proof Reader", "B.B. HO SPOC Designer", "B.B. HO SPOC Editor", 
+                    "B.B. HO SPOC Researcher", "B.B. HO SPOC Data Mgmt"
+                ];
+            } else if (type === 'Sister') {
+                roles = [
+                    "BSTL", "B.S. HO Heads", "B.S. Zonal Heads", "B.S. State Heads", 
+                    "B.S. Branch Heads", "B.S. Branch Designer", "B.S. HO SPOC Writer", 
+                    "B.S. HO SPOC Proof Reader", "B.S. HO SPOC Designer", "B.S. HO SPOC Editor", 
+                    "B.S. HO SPOC Researcher", "B.S. HO SPOC Data Mgmt"
+                ];
+            }
+            
+            roles.forEach(role => {
+                const opt = document.createElement('option');
+                opt.value = role;
+                opt.textContent = role;
+                roleSelect.appendChild(opt);
+            });
+        }
 
         function rUpdateProg() {
             for (let i = 1; i <= rTotal; i++) {
