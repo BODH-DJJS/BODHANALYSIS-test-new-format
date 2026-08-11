@@ -1097,11 +1097,27 @@
                                     <div class="re">Enter company name</div>
                                 </div>
                                 <div class="rfl fw"><label>Languages Known <span class="rq">*</span></label>
-                                    <select name="languages" multiple required size="5" style="height: auto;">
-                                        <option>English</option><option>Hindi</option><option>Bengali</option><option>Marathi</option><option>Telugu</option><option>Tamil</option><option>Gujarati</option><option>Urdu</option><option>Kannada</option><option>Odia</option><option>Malayalam</option><option>Punjabi</option><option>Assamese</option><option>Maithili</option><option>Santali</option><option>Kashmiri</option><option>Sanskrit</option>
-                                    </select>
-                                    <div class="rh">Hold Ctrl/Cmd to select multiple</div>
-                                    <div class="re">Select languages</div>
+                                    <div class="chk-list" id="languagesGroup" style="max-height: 150px; overflow-y: auto; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 0.5rem; background: #f8fafc; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="English"> English</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Hindi"> Hindi</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Bengali"> Bengali</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Marathi"> Marathi</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Telugu"> Telugu</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Tamil"> Tamil</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Gujarati"> Gujarati</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Urdu"> Urdu</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Kannada"> Kannada</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Odia"> Odia</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Malayalam"> Malayalam</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Punjabi"> Punjabi</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Assamese"> Assamese</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Maithili"> Maithili</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Santali"> Santali</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Kashmiri"> Kashmiri</label>
+                                        <label style="display:flex; align-items:center; gap:0.4rem; text-transform:none; font-size:0.85rem; font-weight:normal;"><input type="checkbox" name="languages" value="Sanskrit"> Sanskrit</label>
+                                    </div>
+                                    <input type="hidden" name="languages_req" id="languagesReq" required />
+                                    <div class="re">Select at least one language</div>
                                 </div>
                             </div>
                             <div class="rbtn-row"><button type="button" class="rb rb-back" onclick="rPrev(3)">← Back</button><button type="button" class="rb rb-next" onclick="rNext(3)">Continue →</button></div>
@@ -2526,6 +2542,19 @@
             const sec = document.getElementById('rS' + n);
             const inputs = sec.querySelectorAll('input[required], textarea[required], select[required]');
             let ok = true;
+            
+            // Custom check for languages
+            if (n === 3) {
+                const langGroup = document.getElementById('languagesGroup');
+                const checkedLangs = langGroup.querySelectorAll('input[type="checkbox"]:checked');
+                const langReq = document.getElementById('languagesReq');
+                if (checkedLangs.length === 0) {
+                    langReq.value = '';
+                } else {
+                    langReq.value = 'selected';
+                }
+            }
+
             inputs.forEach(inp => {
                 const g = inp.closest('.rfl');
                 g.classList.remove('has-error');
@@ -2576,12 +2605,16 @@
 
         document.getElementById('regForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Catch any un-added responsibilities
+            addResp();
+
             if (!rValidate(rCur)) return;
             
             const formData = new FormData(e.target);
             const fd = Object.fromEntries(formData);
             
-            // Handle multiple selects properly
+            // Handle multiple checkboxes for languages
             fd.languages = formData.getAll('languages').join(', ');
 
             document.getElementById('regLoading').classList.add('show');
