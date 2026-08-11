@@ -65,7 +65,9 @@ function doPost(e) {
         'Branch AR Number',
         'Highest Education',
         'Current Occupation',
-        'Occupation Description',
+        'Profession',
+        'Years of Experience',
+        'Company Name',
         'Languages Known',
         'Current Branch Responsibilities',
         'Available Time Commitment'
@@ -103,10 +105,12 @@ function doPost(e) {
       formData.branchArNumber || '',
       formData.education || '',
       formData.occupation || '',
-      formData.occupationDesc || '',
+      formData.profession || '',
+      formData.experience || '',
+      formData.companyName || '',
       formData.languages || '',
       formData.responsibilities || '',
-      formData.timeCommit || ''
+      (formData.timeCommitValue && formData.timeCommitPeriod) ? `${formData.timeCommitValue} ${formData.timeCommitPeriod}` : ''
     ];
 
     // Append the row
