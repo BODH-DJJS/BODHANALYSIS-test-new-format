@@ -1144,8 +1144,8 @@
                             <div class="rgrid">
                                 <div class="rfl fw"><label>Current Branch Responsibilities <span class="rq">*</span></label>
                                     <div style="display:flex; gap: 8px;">
-                                        <input type="text" id="respInput" placeholder="e.g., Managing weekly youth meetings..." style="flex:1;" onkeypress="if(event.key === 'Enter') { event.preventDefault(); addResp(); }" />
-                                        <button type="button" class="rb" style="padding: 0.7rem; background:#e2e8f0; color:#334155; border:none; cursor:pointer;" onclick="addResp()">Add Line</button>
+                                        <input type="text" id="respInput" placeholder="e.g., Managing weekly youth meetings..." style="flex:1; min-width:0;" onkeypress="if(event.key === 'Enter') { event.preventDefault(); addResp(); }" />
+                                        <button type="button" style="padding: 0.7rem 1.2rem; background:#e2e8f0; color:#334155; border:none; cursor:pointer; border-radius:8px; font-weight:600; font-size:0.85rem; white-space:nowrap; flex-shrink:0;" onclick="addResp()">Add Line</button>
                                     </div>
                                     <ul id="respList" style="margin-top:8px; font-size:0.85rem; color:#475569; padding-left:20px;"></ul>
                                     <input type="hidden" name="responsibilities" id="respHidden" required />
