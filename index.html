@@ -1008,7 +1008,7 @@
             <div class="reg-wrap">
                 <div class="reg-hdr">
                     <div class="rbadge">B</div>
-                    <h2>BODH POC Team Leader Registration</h2>
+                    <h2>BODH Volunteer Management System (BVMS)</h2>
                     <p>We are gathering details to finalize the Bodh POC Team Leaders. Please fill in your information below.</p>
                 </div>
                 <div class="reg-prog">
@@ -2628,7 +2628,7 @@
                 const li = document.createElement('li');
                 li.textContent = val + " ";
                 const rmBtn = document.createElement('span');
-                rmBtn.textContent = '❌';
+                rmBtn.textContent = ' 🗑️';
                 rmBtn.style.cursor = 'pointer';
                 rmBtn.style.fontSize = '0.7rem';
                 rmBtn.onclick = function() {
@@ -2643,7 +2643,7 @@
         }
         function updateRespHidden() {
             const list = document.getElementById('respList');
-            const items = Array.from(list.children).map(li => li.textContent.replace(' ❌', ''));
+            const items = Array.from(list.children).map(li => li.textContent.replace('  🗑️', ''));
             const hidden = document.getElementById('respHidden');
             hidden.value = items.join(' | ');
             if (items.length > 0) hidden.closest('.rfl').classList.remove('has-error');
